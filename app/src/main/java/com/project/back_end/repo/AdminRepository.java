@@ -1,5 +1,23 @@
 package com.project.back_end.repo;
 
+@Repository
+public interface AdminRepository extends JpaRepository<Admin, Long> {
+    
+    // Returns Optional<Admin> instead of Admin (recommended)
+    Optional<Admin> findByUsername(String username);
+    
+    // Custom query with @Query annotation (if needed)
+    @Query("SELECT a FROM Admin a WHERE a.username = :username")
+    Admin findAdminByUsername(@Param("username") String username);
+    
+    // Case-insensitive search
+    Admin findByUsernameIgnoreCase(String username);
+    
+    // Check if username exists
+    boolean existsByUsername(String username);
+}
+
+/*
 public interface AdminRepository {
 
     // 1. Extend JpaRepository:
@@ -27,4 +45,4 @@ public interface AdminRepository {
 // Example: @Repository
 //          public interface AdminRepository extends JpaRepository<Admin, Long> { ... }
 
-}
+}*/
