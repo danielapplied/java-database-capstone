@@ -1,5 +1,33 @@
 package com.project.back_end.repo;
 
+import com.project.back_end.entity.Patient;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface PatientRepository extends JpaRepository<Patient, Long> {
+    
+    /**
+     * Retrieves a Patient by their email address.
+     * 
+     * @param email the email address to search for
+     * @return Patient entity matching the email, or null if not found
+     */
+    Patient findByEmail(String email);
+    
+    /**
+     * Retrieves a Patient by either their email or phone number.
+     * This provides flexibility for searching patients using either contact method.
+     * 
+     * @param email the email address to search for
+     * @param phone the phone number to search for
+     * @return Patient entity matching either the email or phone, or null if not found
+     */
+    Patient findByEmailOrPhone(String email, String phone);
+}
+
+
+/*
 public interface PatientRepository {
     // 1. Extend JpaRepository:
 //    - The repository extends JpaRepository<Patient, Long>, which provides basic CRUD functionality.
@@ -25,5 +53,5 @@ public interface PatientRepository {
 //    - Spring Data JPA automatically implements this repository, providing the necessary CRUD functionality and custom queries defined in the interface.
 
 
-}
+}*/
 
