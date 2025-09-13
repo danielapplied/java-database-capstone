@@ -1,21 +1,14 @@
----
-name: User Story
-about: This template defines a user story
-title: ''
-labels: ''
-assignees: ''
+# User Story Template
 
----
+**Title:**
+_As a [user role], I want [feature/goal], so that [reason]._
 
-**As a** [role]
-**I need** [function]
-**So that** [benefit]
+**Acceptance Criteria:**
+1. [Criteria 1]
+2. [Criteria 2]
+3. [Criteria 3]
 
-### Details and Assumptions
-    * [document what you know]
-
-### Acceptance Criteria
-    gherkin
-    Given [some context]
-    When [certain action is taken]
-    Then [the outcome of action is observed]
+**Priority:** [High/Medium/Low]
+**Story Points:** [Estimated Effort in Points]
+**Notes:**
+- [Additional information or edge cases]
