@@ -11,7 +11,7 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotNull;
 
 @Entity
-@Table(name = "admins")
+@Table(name = "admin")
 public class Admin {
 
     // Primary key field with auto-generation
