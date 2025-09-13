@@ -1,5 +1,23 @@
 package com.project.back_end.repo;
 
+import com.project.back_end.model.Prescription;
+import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.stereotype.Repository;
+import java.util.List;
+
+@Repository
+public interface PrescriptionRepository extends MongoRepository<Prescription, String> {
+    
+    /**
+     * Finds all prescriptions associated with a specific appointment ID.
+     * 
+     * @param appointmentId the ID of the appointment
+     * @return a list of prescriptions for the given appointment
+     */
+    List<Prescription> findByAppointmentId(Long appointmentId);
+}
+
+/*
 public interface PrescriptionRepository  {
 // 1. Extend MongoRepository:
 //    - The repository extends MongoRepository<Prescription, String>, which provides basic CRUD functionality for MongoDB.
@@ -17,5 +35,5 @@ public interface PrescriptionRepository  {
 //      - MongoRepository automatically derives the query from the method name, in this case, it will find prescriptions by the appointment ID.
 
 
-}
+}*/
 
