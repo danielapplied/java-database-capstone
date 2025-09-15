@@ -1,4 +1,3 @@
-// loggedPatient.js 
 import { getDoctors } from './services/doctorServices.js';
 import { createDoctorCard } from './components/doctorCard.js';
 import { filterDoctors } from './services/doctorServices.js';
@@ -11,18 +10,18 @@ document.addEventListener("DOMContentLoaded", () => {
 
 function loadDoctorCards() {
   getDoctors()
-    .then(doctors => {
-      const contentDiv = document.getElementById("content");
-      contentDiv.innerHTML = "";
+      .then(doctors => {
+        const contentDiv = document.getElementById("content");
+        contentDiv.innerHTML = "";
 
-      doctors.forEach(doctor => {
-        const card = createDoctorCard(doctor);
-        contentDiv.appendChild(card);
+        doctors.forEach(doctor => {
+          const card = createDoctorCard(doctor);
+          contentDiv.appendChild(card);
+        });
+      })
+      .catch(error => {
+        console.error("Failed to load doctors:", error);
       });
-    })
-    .catch(error => {
-      console.error("Failed to load doctors:", error);
-    });
 }
 
 export function showBookingOverlay(e, doctor, patient) {
@@ -103,27 +102,27 @@ function filterDoctorsOnChange() {
   const time = filterTime.length > 0 ? filterTime : null;
   const specialty = filterSpecialty.length > 0 ? filterSpecialty : null;
 
-  filterDoctors(name, time, specialty)
-    .then(response => {
-      const doctors = response.doctors;
-      const contentDiv = document.getElementById("content");
-      contentDiv.innerHTML = "";
+  filterDoctors(name , time ,specialty)
+      .then(response => {
+        const doctors = response.doctors;
+        const contentDiv = document.getElementById("content");
+        contentDiv.innerHTML = "";
 
-      if (doctors.length > 0) {
-        console.log(doctors);
-        doctors.forEach(doctor => {
-          const card = createDoctorCard(doctor);
-          contentDiv.appendChild(card);
-        });
-      } else {
-        contentDiv.innerHTML = "<p>No doctors found with the given filters.</p>";
-        console.log("Nothing");
-      }
-    })
-    .catch(error => {
-      console.error("Failed to filter doctors:", error);
-      alert("❌ An error occurred while filtering doctors.");
-    });
+        if (doctors.length > 0) {
+          console.log(doctors);
+          doctors.forEach(doctor => {
+            const card = createDoctorCard(doctor);
+            contentDiv.appendChild(card);
+          });
+        } else {
+          contentDiv.innerHTML = "<p>No doctors found with the given filters.</p>";
+          console.log("Nothing");
+        }
+      })
+      .catch(error => {
+        console.error("Failed to filter doctors:", error);
+        alert("❌ An error occurred while filtering doctors.");
+      });
 }
 
 export function renderDoctorCards(doctors) {

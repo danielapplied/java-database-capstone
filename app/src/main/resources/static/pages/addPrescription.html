@@ -1,4 +1,4 @@
-<!-- addPrescription.html -->
+<!-- adminDashboard.html -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -19,34 +19,35 @@
 </head>
 
 <body onload="renderContent()">
-    <div class="container">
-        <div class="wrapper">
-            <div id="header"></div>
-            <div class="main-content">
-                <div class="form-container">
-                    <h2 id="heading">Add <span>Prescription</span></h2>
-                    <form>
-                        <label for="patientName">Patient Name</label>
-                        <input type="text" id="patientName" disabled>
+<div class="container">
+    <div class="wrapper">
+        <div id="header"></div>
+        <div class="main-content">
+            <div class="form-container">
+                <h2 id="heading">Add <span>Prescription</span></h2>
+                <form>
+                    <label for="patientName">Patient Name</label>
+                    <input type="text" id="patientName" disabled>
 
-                        <label for="medicines">Medicine Names</label>
-                        <input type="text" id="medicines" placeholder="e.g. Paracetamol, Vitamin C" required>
+                    <label for="medicines">Medicine Names</label>
+                    <input type="text" id="medicines" placeholder="e.g. Paracetamol, Vitamin C" required>
 
-                        <label for="dosage">Dosage Instructions</label>
-                        <textarea id="dosage" rows="3"
-                            placeholder="e.g - Paracetamol"></textarea>
+                    <label for="dosage">Dosage Instructions</label>
+                    <textarea id="dosage" rows="3"
+                              placeholder="e.g - Paracetamol"></textarea>
 
-                        <label for="notes">Additional Notes</label>
-                        <textarea id="notes" rows="3"
-                            placeholder="Any precautions or observations (optional)"></textarea>
+                    <label for="notes">Additional Notes</label>
+                    <textarea id="notes" rows="3"
+                              placeholder="Any precautions or observations (optional)"></textarea>
 
-                        <button type="submit" class="btn-primary" id="savePrescription">Add Prescription</button>
-                        <button type="button" onclick="selectRole('doctor')" class="btn-secondary">Cancel</button>
-                    </form>
-                </div>
+                    <button type="submit" class="btn-primary" id="savePrescription">Add Prescription</button>
+                    <button type="button" onclick="selectRole('doctor')" class="btn-secondary">Cancel</button>
+                </form>
             </div>
-            <div id="footer"></div>
         </div>
+        <div id="footer"></div>
     </div>
+</div>
+
 </body>
 </html>

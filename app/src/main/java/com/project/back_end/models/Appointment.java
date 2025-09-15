@@ -1,5 +1,6 @@
 package com.project.back_end.models;
 
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -8,69 +9,39 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Transient;
 import jakarta.validation.constraints.Future;
 import jakarta.validation.constraints.NotNull;
+
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 
+
 @Entity
 public class Appointment {
 
-    // 1. 'id' field - Primary key with auto-generation
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    // 2. 'doctor' field - Many-to-One relationship with Doctor
     @ManyToOne
-    @NotNull
+    @NotNull(message = "Doctor must be assigned to the appointment")
     private Doctor doctor;
 
-    // 3. 'patient' field - Many-to-One relationship with Patient
     @ManyToOne
-    @NotNull
+    @NotNull(message = "Patient must be assigned to the appointment")
     private Patient patient;
 
-    // 4. 'appointmentTime' field - Future date/time validation
-    @Future
-    @NotNull
-    private LocalDateTime appointmentTime;
+    @Future(message = "Appointment time must be in the future")
+    private LocalDateTime appointmentTime;  // The time when the appointment is scheduled
 
-    // 5. 'status' field - Integer status (0=scheduled, 1=completed)
-    @NotNull
-    private Integer status;
-
-    // 9. Constructors
-    // No-argument constructor (required by JPA)
-    public Appointment() {
-    }
-
-    // Parameterized constructor
-    public Appointment(Doctor doctor, Patient patient, LocalDateTime appointmentTime, Integer status) {
-        this.doctor = doctor;
-        this.patient = patient;
-        this.appointmentTime = appointmentTime;
-        this.status = status;
-    }
-
-    // 6. 'getEndTime' method - Transient field calculating end time
     @Transient
     public LocalDateTime getEndTime() {
         return appointmentTime != null ? appointmentTime.plusHours(1) : null;
     }
 
-    // 7. 'getAppointmentDate' method - Extract date part only
-    @Transient
-    public LocalDate getAppointmentDate() {
-        return appointmentTime != null ? appointmentTime.toLocalDate() : null;
-    }
+    @NotNull(message = "Status cannot be null")
+    private int status;  // Status can be "Scheduled:0", "Completed:1"
 
-    // 8. 'getAppointmentTimeOnly' method - Extract time part only
-    @Transient
-    public LocalTime getAppointmentTimeOnly() {
-        return appointmentTime != null ? appointmentTime.toLocalTime() : null;
-    }
-
-    // 10. Getters and Setters
+    // Getters and Setters
     public Long getId() {
         return id;
     }
@@ -103,46 +74,21 @@ public class Appointment {
         this.appointmentTime = appointmentTime;
     }
 
-    public Integer getStatus() {
+    public int getStatus() {
         return status;
     }
 
-    public void setStatus(Integer status) {
+    public void setStatus(int status) {
         this.status = status;
     }
 
-    // Additional utility methods for status
-    public boolean isScheduled() {
-        return status != null && status == 0;
+    // Getter for LocalDate (only the date part, no time)
+    public LocalDate getAppointmentDate() {
+        return appointmentTime != null ? appointmentTime.toLocalDate() : null;
     }
 
-    public boolean isCompleted() {
-        return status != null && status == 1;
-    }
-
-    // toString method for debugging
-    @Override
-    public String toString() {
-        return "Appointment{" +
-                "id=" + id +
-                ", doctor=" + (doctor != null ? doctor.getId() : null) +
-                ", patient=" + (patient != null ? patient.getId() : null) +
-                ", appointmentTime=" + appointmentTime +
-                ", status=" + status +
-                '}';
-    }
-
-    // equals and hashCode methods
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Appointment that = (Appointment) o;
-        return id != null && id.equals(that.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
+    // Getter for LocalTime (only the time part, no date)
+    public LocalTime getAppointmentTimeOnly() {
+        return appointmentTime != null ? appointmentTime.toLocalTime() : null;  // Extracts only the time
     }
 }

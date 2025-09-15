@@ -1,61 +1,53 @@
 package com.project.back_end.models;
 
-import jakarta.persistence.*;
-import jakarta.validation.constraints.*;
-import com.fasterxml.jackson.annotation.JsonProperty;
+
+
+import jakarta.persistence.ElementCollection;
+import jakarta.persistence.Entity;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
+import jakarta.validation.constraints.Size;
 import java.util.List;
+import com.fasterxml.jackson.annotation.JsonProperty;
 
 @Entity
-@Table(name = "doctor")
 public class Doctor {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NotNull(message = "Doctor name is required")
-    @Size(min = 3, max = 100, message = "Doctor name must be between 3 and 100 characters")
-    @Column(nullable = false, length = 100)
+    @NotNull(message = "Doctor's name cannot be null")
+    @Size(min = 3, max = 100, message = "Doctor's name should be between 3 and 100 characters")
     private String name;
 
-    @NotNull(message = "Specialty is required")
-    @Size(min = 3, max = 50, message = "Specialty must be between 3 and 50 characters")
-    @Column(nullable = false, length = 50)
+    @NotNull(message = "Specialty cannot be null")
+    @Size(min = 3, max = 50, message = "Specialty should be between 3 and 50 characters")
     private String specialty;
 
-    @NotNull(message = "Email is required")
-    @Email(message = "Email should be valid")
-    @Column(nullable = false, unique = true)
+    @NotNull(message = "Email cannot be null")
+    @Email(message = "Invalid email format")
     private String email;
 
-    @NotNull(message = "Password is required")
+    @NotNull(message = "Password cannot be null")
     @Size(min = 6, message = "Password must be at least 6 characters long")
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
-    @Column(nullable = false)
     private String password;
 
-    @NotNull(message = "Phone number is required")
-    @Pattern(regexp = "\\d{10}", message = "Phone number must be 10 digits")
-    @Column(nullable = false)
+    @NotNull(message = "Phone number cannot be null")
+    @Pattern(regexp = "^[0-9]{10}$", message = "Phone number must be 10 digits long")
     private String phone;
 
+
+    // A list to store available times for the doctor (as string representations of time slots)
     @ElementCollection
-    @CollectionTable(name = "doctor_available_times", joinColumns = @JoinColumn(name = "doctor_id"))
-    @Column(name = "time_slot")
-    private List<String> availableTimes;
+    private List<String> availableTimes; // e.g., ["09:00-10:00", "10:00-11:00", ...]
 
-    // Default constructor
-    public Doctor() {}
 
-    // Constructor with parameters (excluding id as it's auto-generated)
-    public Doctor(String name, String specialty, String email, String password, String phone, List<String> availableTimes) {
-        this.name = name;
-        this.specialty = specialty;
-        this.email = email;
-        this.password = password;
-        this.phone = phone;
-        this.availableTimes = availableTimes;
-    }
 
     // Getters and Setters
     public Long getId() {
@@ -90,6 +82,7 @@ public class Doctor {
         this.email = email;
     }
 
+
     public String getPassword() {
         return password;
     }
@@ -97,6 +90,7 @@ public class Doctor {
     public void setPassword(String password) {
         this.password = password;
     }
+
 
     public String getPhone() {
         return phone;
@@ -112,32 +106,5 @@ public class Doctor {
 
     public void setAvailableTimes(List<String> availableTimes) {
         this.availableTimes = availableTimes;
-    }
-
-    // toString method for debugging
-    @Override
-    public String toString() {
-        return "Doctor{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", specialty='" + specialty + '\'' +
-                ", email='" + email + '\'' +
-                ", phone='" + phone + '\'' +
-                ", availableTimes=" + availableTimes +
-                '}';
-    }
-
-    // equals and hashCode methods
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        Doctor doctor = (Doctor) o;
-        return id != null && id.equals(doctor.id);
-    }
-
-    @Override
-    public int hashCode() {
-        return getClass().hashCode();
     }
 }
