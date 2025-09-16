@@ -134,7 +134,7 @@ public class Service {
         Map<String, String> map = new HashMap<>();
         try {
             Patient result = patientRepository.findByEmail(login.getEmail());
-            if (result != null) {
+            if( result != null ) {
                 if (result.getPassword().equals(login.getPassword())) {
                     map.put("token", tokenService.generateToken(login.getEmail()));
                     return ResponseEntity.status(HttpStatus.OK).body(map);
@@ -178,8 +178,6 @@ public class Service {
         {
             return patientService.getPatientAppointment(patientId,token);
         }
-
-
     }
 
 }

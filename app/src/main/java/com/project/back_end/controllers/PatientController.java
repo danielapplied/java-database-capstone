@@ -77,7 +77,6 @@ public class PatientController {
             map.putAll(tempMap.getBody());
             return new ResponseEntity<>(map, tempMap.getStatusCode());
         }
-
         return patientService.getPatientAppointment(id,token);
     }
 
